@@ -210,3 +210,25 @@ class KInvertRotDown {
         })
     }
 }
+
+class Renderer {
+
+    ird : KInvertRotDown = new KInvertRotDown()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.ird.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.ird.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.ird.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+}
